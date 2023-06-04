@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+    {% block content %}
+
+    <div class="info">
+      {% for i in range(0,columns|length) %}
+      <t>{{ columns[i] }}: {{ row[columns[i]] }}</t><br>
+      {% endfor %}
+      {% if reviews %}
+        <t>average likert: {{ reviews['avg_likert']}}</t><br>
+        {% for text in reviews['texts'] %}
+        <t>review: {{ text }}</t><br>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <br>
+
+    <form action="reservation" method="POST">
+      <input type="text" id="username" name="username">
+      <label for="username">Username</label>
+      <br>
+      <input type="password" id="password" name="password">
+      <label for="password">Password</label>
+      <input type="hidden" name="book_id" value={{ row[columns[0]] }}>
+      <input type="hidden" name="title" value="{{ row[columns[1]] }}">
+      <br>
+      <input type="submit" value="Reserve">
+    </form>
+
+    {% endblock content %}

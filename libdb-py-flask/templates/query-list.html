@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+    {% block content %}
+	
+    <div class="query-list">
+      {% for query in queries %}
+      <a href="{{ query }}">{{ query.capitalize() }}</a><br><br>
+      {% endfor %}
+    </div>
+
+    {% endblock content %}

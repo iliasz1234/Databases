@@ -1,0 +1,24 @@
+table, th, td{
+	border:1px solid black;
+	color:red;
+}
+
+.topnav {
+	width:max-content;
+	border:1px solid black;
+	font-size:26px;
+	padding:20px;
+}
+
+.topnav a {
+	padding:20px;	
+}
+
+
+.query-list{
+	font-size:22px;	
+}
+
+.info {
+	color:red;
+}

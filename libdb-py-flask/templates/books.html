@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+    {% block content %}
+  
+    {% if filters1 %}
+    <form action="{{ action }}">
+      <select name="filter1">
+      {% for filter in filters1 %}
+      <option value="{{ filter }}">{{ filter }}</option>
+      {% endfor %}
+      </select>
+      <input type="text" name="filter1_key">
+      {% if filters2 %}
+      <select name="filter2">
+	    {% for filter in filters2 %}
+      <option value="{{ filter }}">{{ filter }}</option>
+	    {% endfor %}
+      </select>
+      <input type="text" name="filter2_key">
+      {% endif %}
+      <input type="submit" value="Filter">
+    </form>
+    <br>
+    {% endif %}
+
+    
+
+    {% if filter_selection %}
+    <p> Results for:   {{ filter_selection }} </p>
+    <br>
+    {% endif %}
+
+    <table>
+      <thead>
+        <tr>
+        {% for column in columns %}
+          <th>{{ column }}</th>
+        {% endfor %}
+	<th>Reserve</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          {% for i in range(0,columns|length) %}
+          <td> {{  row[columns[i]] }}</td>
+          {% endfor %}
+          <td><a href="reservation?title={{ row[columns[0]] }}">Reserve</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endblock content %}
