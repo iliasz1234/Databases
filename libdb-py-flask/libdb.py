@@ -86,7 +86,7 @@ def reservation():
 
 		cursor = mysql.connection.cursor()
 
-		cursor.execute("SELECT b.book_id as book_id,title,GROUP_CONCAT(DISTINCT a.author SEPARATOR ', ') as authors,publisher,GROUP_CONCAT(DISTINCT c.category SEPARATOR ', ') as categories, GROUP_CONCAT(DISTINCT k.keyword SEPARATOR ', ') as keywords,pages,summary,language,GROUP_CONCAT(DISTINCT text SEPARATOR '|') as texts,AVG(likert) as avg_likert FROM books b JOIN book_authors ba ON b.book_id = ba.book_id JOIN authors a ON ba.author_id = a.author_id JOIN book_categories bc ON b.book_id = bc.book_id JOIN categories c ON bc.category_id = c.category_id JOIN book_keywords bk ON b.book_id = bk.book_id JOIN keywords k ON bk.keyword_id = k.keyword_id JOIN school_books sb ON b.book_id = sb.book_id JOIN reviews r ON b.book_id = r.book_id WHERE title = '{}';".format(title))
+		cursor.execute("SELECT b.book_id as book_id,title,GROUP_CONCAT(DISTINCT a.author SEPARATOR ', ') as authors,publisher,GROUP_CONCAT(DISTINCT c.category SEPARATOR ', ') as categories, GROUP_CONCAT(DISTINCT k.keyword SEPARATOR ', ') as keywords,pages,summary,language,GROUP_CONCAT(DISTINCT text SEPARATOR '|') as texts,AVG(likert) as avg_likert FROM books b JOIN book_authors ba ON b.book_id = ba.book_id JOIN authors a ON ba.author_id = a.author_id JOIN book_categories bc ON b.book_id = bc.book_id JOIN categories c ON bc.category_id = c.category_id JOIN book_keywords bk ON b.book_id = bk.book_id JOIN keywords k ON bk.keyword_id = k.keyword_id JOIN school_books sb ON b.book_id = sb.book_id LEFT JOIN reviews r ON b.book_id = r.book_id WHERE title = '{}';".format(title))
 
 		columns = [i[0] for i in cursor.description]
 		
@@ -99,8 +99,9 @@ def reservation():
 		columns = columns[:-2]		
 		row = dict(zip(columns, rows[0][:-2]))	
 
-		print(reviews)
-		print(reviews['texts'])
+	
+		print(columns)
+		print(rows)
 
 		if reviews['texts']:
 			reviews['texts'] = reviews['texts'] .split('|')
@@ -114,8 +115,6 @@ def reservation():
 		book_id = request.form['book_id']
 		title = request.form['title']
 		username = request.form['username']
-
-		print(title)
 
 		cursor = mysql.connection.cursor()
 
